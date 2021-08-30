@@ -56,11 +56,11 @@ int openConnection(const char *sockname, int msec, const struct timespec abstime
 	memset(open_connection_name, 0, AF_UNIX_MAX_PATH);
 	sockaddress.sin_family = AF_INET;
 	sockaddress.sin_port = htons(8080);
-	inet_aton("192.168.1.7", &sockaddress.sin_addr);
+	sockaddress.sin_addr.s_addr = inet_addr("192.168.1.7");
 	// strncpy(sockaddress.sun_path, sockname, AF_UNIX_MAX_PATH);
 	// strncpy(open_connection_name, sockname, AF_UNIX_MAX_PATH);
 	// sockaddress.sun_family = AF_UNIX;
-	socket_fd = socket(PF_UNIX, SOCK_STREAM, 0);
+	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	while ((connection_status = connect(socket_fd, (struct sockaddr *)&sockaddress, sizeof(sockaddress))) == -1){
 		nanosleep(&wait_reconnect, NULL);
 		if (remaining_until_failure.tv_nsec + wait_reconnect.tv_nsec == 1e+9){
