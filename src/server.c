@@ -105,7 +105,7 @@ int main(int argc, char* argv[]){
 	// strncpy(sockaddress.sun_path, SOCKETADDR, AF_UNIX_MAX_PATH-1);
 	sockaddress.sin_family = AF_INET;
 	sockaddress.sin_port = htons(8080);
-	sockaddress.sin_addr.s_addr = inet_addr("192.168.1.7");
+	sockaddress.sin_addr.s_addr = INADDR_ANY;
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	unlink(SOCKETADDR);
 	CHECKSCEXIT(bind(socket_fd, (struct sockaddr *) &sockaddress, sizeof(sockaddress)), true, "Non sono riuscito a fare la bind");
